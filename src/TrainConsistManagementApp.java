@@ -1,11 +1,10 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
 
 /**
  * Train Consist Management Application
  *
- * UC2: Add and manage passenger bogies using ArrayList
- * Demonstrates CRUD operations on a dynamic list.
+ * UC4: Maintain ordered bogie consist using LinkedList
+ * Demonstrates insertion, deletion, and order preservation.
  *
  * @author Lakshmi M
  * @version 1.0
@@ -19,28 +18,32 @@ public class TrainConsistManagementApp {
         System.out.println("   Train Consist Management App");
         System.out.println("======================================");
 
-        // Create ArrayList for passenger bogies
-        List<String> bogies = new ArrayList<>();
+        // Create LinkedList for train consist
+        LinkedList<String> train = new LinkedList<>();
 
-        // ADD bogies (Create)
-        bogies.add("Sleeper");
-        bogies.add("AC Chair");
-        bogies.add("First Class");
+        // Add bogies
+        train.add("Engine");
+        train.add("Sleeper");
+        train.add("AC");
+        train.add("Cargo");
+        train.add("Guard");
 
-        // DISPLAY bogies (Read)
-        System.out.println("\nBogies after addition:");
-        System.out.println(bogies);
+        System.out.println("\nInitial Train Consist:");
+        System.out.println(train);
 
-        // REMOVE bogie (Delete)
-        bogies.remove("AC Chair");
+        // Insert Pantry Car at position 2 (index 1)
+        train.add(1, "Pantry Car");
 
-        // CHECK existence
-        boolean isSleeperPresent = bogies.contains("Sleeper");
-        System.out.println("\nIs 'Sleeper' present? " + isSleeperPresent);
+        System.out.println("\nAfter adding Pantry Car:");
+        System.out.println(train);
 
-        // FINAL STATE
-        System.out.println("\nFinal Bogie List:");
-        System.out.println(bogies);
+        // Remove first and last bogie
+        train.removeFirst(); // removes Engine
+        train.removeLast();  // removes Guard
+
+        // Final consist
+        System.out.println("\nFinal Train Consist:");
+        System.out.println(train);
 
         // Program continues...
     }
