@@ -1,40 +1,38 @@
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * Train Consist / Booking Management Application
+ * Train Consist Management Application
  *
- * UC5: Handle booking requests using Queue (FIFO)
- * Demonstrates fair request handling.
+ * UC6: Map bogies to their seating/load capacity using HashMap
+ * Demonstrates key–value data modeling.
  *
  * @author Lakshmi M
  * @version 1.0
  */
-public class TrainApp {
+public class TrainConsistManagementApp {
 
     public static void main(String[] args) {
 
         // Welcome message
         System.out.println("======================================");
-        System.out.println("   Booking Request Queue System");
+        System.out.println("   Train Consist Management App");
         System.out.println("======================================");
 
-        // Create Queue for booking requests
-        Queue<String> bookingQueue = new LinkedList<>();
+        // Create HashMap for bogie-capacity mapping
+        Map<String, Integer> bogieCapacity = new HashMap<>();
 
-        // Guest booking requests (arrival order)
-        bookingQueue.add("Request 1 - Alice");
-        bookingQueue.add("Request 2 - Bob");
-        bookingQueue.add("Request 3 - Charlie");
+        // Insert bogie capacities
+        bogieCapacity.put("Sleeper", 72);
+        bogieCapacity.put("AC Chair", 60);
+        bogieCapacity.put("First Class", 24);
 
-        // Display queue
-        System.out.println("\nBooking Requests in Queue:");
-        System.out.println(bookingQueue);
+        // Display mapping
+        System.out.println("\nBogie Capacity Details:");
 
-        // Peek (next request to be processed)
-        System.out.println("\nNext Request to Process: " + bookingQueue.peek());
-
-        // No processing/removal yet (as per requirement)
+        for (Map.Entry<String, Integer> entry : bogieCapacity.entrySet()) {
+            System.out.println(entry.getKey() + " → Capacity: " + entry.getValue());
+        }
 
         // Program continues...
     }
