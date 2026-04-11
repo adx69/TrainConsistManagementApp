@@ -5,9 +5,9 @@ import java.util.stream.Collectors;
 /**
  * Train Consist Management Application
  *
- * Covers UC1–UC18:
+ * Covers UC1–UC19:
  * Collections, Streams, Regex, Validation, Performance,
- * Exceptions, Sorting, Searching
+ * Exceptions, Sorting, Searching (Linear + Binary)
  *
  * @author Lakshmi M
  * @version 1.0
@@ -98,7 +98,28 @@ public class TrainConsistManagementApp {
     static boolean linearSearch(String[] arr, String key) {
         for (String id : arr) {
             if (id.equals(key)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // ================= UC19 Binary Search =================
+    static boolean binarySearch(String[] arr, String key) {
+        int low = 0;
+        int high = arr.length - 1;
+
+        while (low <= high) {
+            int mid = (low + high) / 2;
+
+            int cmp = arr[mid].compareTo(key);
+
+            if (cmp == 0) {
                 return true; // found
+            } else if (cmp < 0) {
+                low = mid + 1; // search right
+            } else {
+                high = mid - 1; // search left
             }
         }
         return false; // not found
@@ -266,13 +287,18 @@ public class TrainConsistManagementApp {
         System.out.print("Enter Bogie ID to search: ");
         String searchKey = sc.nextLine();
 
-        boolean found = linearSearch(bogieIds, searchKey);
+        boolean foundLinear = linearSearch(bogieIds, searchKey);
 
-        if (found) {
-            System.out.println("Bogie ID FOUND ✅");
-        } else {
-            System.out.println("Bogie ID NOT FOUND ❌");
-        }
+        System.out.println(foundLinear ? "Found (Linear) ✅" : "Not Found (Linear) ❌");
+
+        // ================= UC19 =================
+        System.out.println("\n=== UC19: Binary Search ===");
+
+        Arrays.sort(bogieIds); // MUST be sorted
+
+        boolean foundBinary = binarySearch(bogieIds, searchKey);
+
+        System.out.println(foundBinary ? "Found (Binary) 🚀" : "Not Found (Binary) ❌");
 
         sc.close();
     }
