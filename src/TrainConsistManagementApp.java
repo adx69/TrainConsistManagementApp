@@ -5,8 +5,9 @@ import java.util.stream.Collectors;
 /**
  * Train Consist Management Application
  *
- * Covers UC1–UC16:
- * Collections, Streams, Regex, Validation, Performance, Exceptions, Sorting Algorithm
+ * Covers UC1–UC17:
+ * Collections, Streams, Regex, Validation, Performance,
+ * Exceptions, Algorithms, and Built-in Sorting
  *
  * @author Lakshmi M
  * @version 1.0
@@ -83,11 +84,8 @@ public class TrainConsistManagementApp {
         int n = arr.length;
 
         for (int i = 0; i < n - 1; i++) {
-
             for (int j = 0; j < n - i - 1; j++) {
-
                 if (arr[j] > arr[j + 1]) {
-                    // swap
                     int temp = arr[j];
                     arr[j] = arr[j + 1];
                     arr[j + 1] = temp;
@@ -238,10 +236,19 @@ public class TrainConsistManagementApp {
         int[] capacities = {72, 60, 24, 90, 50};
 
         System.out.println("Before Sorting: " + Arrays.toString(capacities));
-
         bubbleSort(capacities);
-
         System.out.println("After Sorting:  " + Arrays.toString(capacities));
+
+        // ================= UC17 =================
+        System.out.println("\n=== UC17: Arrays.sort ===");
+
+        String[] bogieNames = {"Sleeper", "AC Chair", "First Class", "General", "Pantry"};
+
+        System.out.println("Before Sorting: " + Arrays.toString(bogieNames));
+
+        Arrays.sort(bogieNames);
+
+        System.out.println("After Sorting:  " + Arrays.toString(bogieNames));
 
         sc.close();
     }
