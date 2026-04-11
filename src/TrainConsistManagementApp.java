@@ -5,9 +5,9 @@ import java.util.stream.Collectors;
 /**
  * Train Consist Management Application
  *
- * Covers UC1–UC17:
+ * Covers UC1–UC18:
  * Collections, Streams, Regex, Validation, Performance,
- * Exceptions, Algorithms, and Built-in Sorting
+ * Exceptions, Sorting, Searching
  *
  * @author Lakshmi M
  * @version 1.0
@@ -92,6 +92,16 @@ public class TrainConsistManagementApp {
                 }
             }
         }
+    }
+
+    // ================= UC18 Linear Search =================
+    static boolean linearSearch(String[] arr, String key) {
+        for (String id : arr) {
+            if (id.equals(key)) {
+                return true; // found
+            }
+        }
+        return false; // not found
     }
 
     public static void main(String[] args) {
@@ -245,10 +255,24 @@ public class TrainConsistManagementApp {
         String[] bogieNames = {"Sleeper", "AC Chair", "First Class", "General", "Pantry"};
 
         System.out.println("Before Sorting: " + Arrays.toString(bogieNames));
-
         Arrays.sort(bogieNames);
-
         System.out.println("After Sorting:  " + Arrays.toString(bogieNames));
+
+        // ================= UC18 =================
+        System.out.println("\n=== UC18: Linear Search ===");
+
+        String[] bogieIds = {"B1", "B2", "B3", "B4", "B5"};
+
+        System.out.print("Enter Bogie ID to search: ");
+        String searchKey = sc.nextLine();
+
+        boolean found = linearSearch(bogieIds, searchKey);
+
+        if (found) {
+            System.out.println("Bogie ID FOUND ✅");
+        } else {
+            System.out.println("Bogie ID NOT FOUND ❌");
+        }
 
         sc.close();
     }
