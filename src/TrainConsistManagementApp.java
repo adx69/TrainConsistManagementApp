@@ -5,8 +5,8 @@ import java.util.stream.Collectors;
 /**
  * Train Consist Management Application
  *
- * Covers UC1–UC15:
- * Collections, Streams, Regex, Validation, Performance, Exceptions
+ * Covers UC1–UC16:
+ * Collections, Streams, Regex, Validation, Performance, Exceptions, Sorting Algorithm
  *
  * @author Lakshmi M
  * @version 1.0
@@ -78,6 +78,24 @@ public class TrainConsistManagementApp {
         }
     }
 
+    // ================= UC16 Bubble Sort =================
+    static void bubbleSort(int[] arr) {
+        int n = arr.length;
+
+        for (int i = 0; i < n - 1; i++) {
+
+            for (int j = 0; j < n - i - 1; j++) {
+
+                if (arr[j] > arr[j + 1]) {
+                    // swap
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                }
+            }
+        }
+    }
+
     public static void main(String[] args) {
 
         System.out.println("======================================");
@@ -136,24 +154,19 @@ public class TrainConsistManagementApp {
             bogies.add(new Bogie("S1", "Sleeper", 72));
             bogies.add(new Bogie("AC1", "AC", 60));
             bogies.add(new Bogie("FC1", "First Class", 24));
-            // bogies.add(new Bogie("Invalid", "Test", -5)); // test exception
         } catch (InvalidCapacityException e) {
             System.out.println("Error: " + e.getMessage());
         }
 
-        // UC7 Sorting
         bogies.sort(Comparator.comparingInt(b -> b.capacity));
 
-        // UC8 Filtering
         List<Bogie> filtered = bogies.stream()
                 .filter(b -> b.capacity > 50)
                 .collect(Collectors.toList());
 
-        // UC9 Grouping
         Map<String, List<Bogie>> grouped = bogies.stream()
                 .collect(Collectors.groupingBy(b -> b.type));
 
-        // UC10 Total Capacity
         int total = bogies.stream().mapToInt(b -> b.capacity).sum();
 
         System.out.println("\nSorted: " + bogies);
@@ -214,10 +227,21 @@ public class TrainConsistManagementApp {
         GoodsBogie g1 = new GoodsBogie("Box", "Coal");
         GoodsBogie g2 = new GoodsBogie("Cylindrical", "Petroleum");
 
-        assignCargo(g2, "Petroleum"); // safe
-        assignCargo(g1, "Petroleum"); // unsafe
+        assignCargo(g2, "Petroleum");
+        assignCargo(g1, "Petroleum");
 
         System.out.println("\nProgram continues safely ✅");
+
+        // ================= UC16 =================
+        System.out.println("\n=== UC16: Bubble Sort ===");
+
+        int[] capacities = {72, 60, 24, 90, 50};
+
+        System.out.println("Before Sorting: " + Arrays.toString(capacities));
+
+        bubbleSort(capacities);
+
+        System.out.println("After Sorting:  " + Arrays.toString(capacities));
 
         sc.close();
     }
