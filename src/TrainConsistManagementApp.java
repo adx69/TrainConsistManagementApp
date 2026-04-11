@@ -4,15 +4,14 @@ import java.util.stream.*;
 /**
  * Train Consist Management Application
  *
- * UC12: Safety compliance check using Streams and allMatch()
- * Demonstrates rule-based validation using lambda expressions.
+ * UC13: Compare performance of loops vs streams
+ * Demonstrates benchmarking using System.nanoTime()
  *
  * @author Lakshmi M
  * @version 1.0
  */
 public class TrainConsistManagementApp {
 
-    // Passenger Bogie (existing)
     static class Bogie {
         String name;
         int capacity;
@@ -23,55 +22,52 @@ public class TrainConsistManagementApp {
         }
     }
 
-    // Goods Bogie (new for UC12)
-    static class GoodsBogie {
-        String type;   // Cylindrical / Box
-        String cargo;  // Petroleum / Coal / etc.
-
-        GoodsBogie(String type, String cargo) {
-            this.type = type;
-            this.cargo = cargo;
-        }
-    }
-
     public static void main(String[] args) {
 
-        // Welcome message
         System.out.println("======================================");
         System.out.println("   Train Consist Management App");
         System.out.println("======================================");
 
-        // ===== UC10 (existing) =====
+        // Create large dataset for meaningful comparison
         List<Bogie> bogies = new ArrayList<>();
-        bogies.add(new Bogie("Sleeper", 72));
-        bogies.add(new Bogie("AC Chair", 60));
-        bogies.add(new Bogie("First Class", 24));
+        for (int i = 1; i <= 100000; i++) {
+            bogies.add(new Bogie("B" + i, (i % 100) + 20));
+        }
 
-        int totalCapacity = bogies.stream()
-                .map(b -> b.capacity)
-                .reduce(0, Integer::sum);
+        // ===== LOOP-BASED FILTERING =====
+        long startLoop = System.nanoTime();
 
-        System.out.println("\nTotal Seating Capacity: " + totalCapacity);
+        List<Bogie> loopResult = new ArrayList<>();
+        for (Bogie b : bogies) {
+            if (b.capacity > 60) {
+                loopResult.add(b);
+            }
+        }
 
-        // ===== UC12 START =====
+        long endLoop = System.nanoTime();
+        long loopTime = endLoop - startLoop;
 
-        // Create goods bogies
-        List<GoodsBogie> goods = new ArrayList<>();
-        goods.add(new GoodsBogie("Cylindrical", "Petroleum"));
-        goods.add(new GoodsBogie("Box", "Coal"));
-        goods.add(new GoodsBogie("Cylindrical", "Petroleum"));
+        // ===== STREAM-BASED FILTERING =====
+        long startStream = System.nanoTime();
 
-        // Safety validation using allMatch()
-        boolean isSafe = goods.stream()
-                .allMatch(b ->
-                        // Rule: If cylindrical → must carry petroleum
-                        !b.type.equals("Cylindrical") || b.cargo.equals("Petroleum")
-                );
+        List<Bogie> streamResult = bogies.stream()
+                .filter(b -> b.capacity > 60)
+                .collect(Collectors.toList());
 
-        // Display result
-        System.out.println("\nSafety Compliance Status: " +
-                (isSafe ? "SAFE ✅" : "NOT SAFE ❌"));
+        long endStream = System.nanoTime();
+        long streamTime = endStream - startStream;
 
-        // ===== UC12 END =====
+        // ===== RESULTS =====
+        System.out.println("\nLoop Filtering Time: " + loopTime + " ns");
+        System.out.println("Stream Filtering Time: " + streamTime + " ns");
+
+        // Optional comparison
+        if (loopTime < streamTime) {
+            System.out.println("\nLoop is faster in this run ⚡");
+        } else {
+            System.out.println("\nStream is faster in this run ⚡");
+        }
+
+        // Program continues...
     }
 }
